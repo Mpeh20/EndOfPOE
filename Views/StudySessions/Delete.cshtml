@@ -1,0 +1,23 @@
+@model StudyFlow.Models.StudySession
+@{
+    ViewData["Title"] = "Delete Study Session";
+    var module = ViewBag.Module as StudyFlow.Models.Module;
+}
+
+<h1>Delete Study Session</h1>
+
+<div class="card">
+    <p><strong>Are you sure you want to delete this session?</strong></p>
+    <ul style="margin:1rem 0 1rem 1.5rem;">
+        <li><strong>Module:</strong> @module?.Name</li>
+        <li><strong>Date:</strong> @Model.Date.ToString("dddd, dd MMMM yyyy")</li>
+        <li><strong>Time:</strong> @Model.StartTime.ToString(@"hh\:mm")</li>
+        <li><strong>Duration:</strong> @Model.DurationMinutes minutes</li>
+    </ul>
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
