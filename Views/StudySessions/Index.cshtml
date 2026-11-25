@@ -1,0 +1,28 @@
+@model IEnumerable<StudyFlow.Models.Module>
+@{
+    ViewData["Title"] = "Modules";
+}
+
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;">
+    <h1 style="margin:0;">My Modules</h1>
+    <a asp-action="Create" class="btn btn-primary">+ Add Module</a>
+</div>
+
+@foreach (var m in Model)
+{
+    <div class="session-row" style="border-left-color:@m.ColourHex">
+        <div class="session-info">
+            <div class="session-module" style="color:@m.ColourHex;">@m.Name</div>
+            <div class="session-time">Colour: @m.ColourHex</div>
+        </div>
+        <div class="session-actions">
+            <a asp-action="Edit" asp-route-id="@m.Id" class="btn btn-sm btn-secondary">Edit</a>
+            <form asp-action="Delete" method="post" style="display:inline;"
+                  onsubmit="return confirm('Deleting this module will also remove all its study sessions. Continue?');">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@m.Id" />
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+}
