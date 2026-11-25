@@ -1,0 +1,47 @@
+@model IEnumerable<StudyFlow.Models.StudySession>
+@{
+    ViewData["Title"] = "Dashboard";
+    var modules = ViewBag.Modules as List<StudyFlow.Models.Module> ?? new();
+    var total = Model.Count();
+    var completed = Model.Count(s => s.Completed);
+    var percent = total == 0 ? 0 : (completed * 100 / total);
+}
+
+<h1>Dashboard</h1>
+<p style="color:#64748b;margin-bottom:1.5rem;">Welcome back! Here is an overview of your scheduled study time.</p>
+
+<div class="card">
+    <h2 style="margin-top:0;">Weekly Progress</h2>
+    <p><strong>@completed of @total</strong> study sessions completed.</p>
+    <div style="background:#e2e8f0;border-radius:8px;height:14px;overflow:hidden;">
+        <div style="width:@percent%;background:var(--success);height:100%;transition:width .3s;"></div>
+    </div>
+    <p style="margin-top:.5rem;color:#64748b;">@percent% complete</p>
+</div>
+
+<h2>Upcoming Study Sessions</h2>
+@if (!Model.Any())
+{
+    <div class="card">
+        <p>You have no sessions scheduled yet. 
+            <a asp-controller="StudySessions" asp-action="Create">Schedule your first study session</a>.</p>
+    </div>
+}
+else
+{
+    foreach (var s in Model.Take(5))
+    {
+        var m = modules.FirstOrDefault(x => x.Id == s.ModuleId);
+        <div class="session-row @(s.Completed ? "completed" : "")" style="border-left-color:@(m?.ColourHex ?? "#3B82F6")">
+            <div class="session-info">
+                <div class="session-module" style="color:@(m?.ColourHex ?? "#3B82F6")">@m?.Name</div>
+                <div class="session-time">@s.Date.ToString("ddd, dd MMM yyyy") • @s.StartTime.ToString(@"hh\:mm") for @s.DurationMinutes min</div>
+                @if (!string.IsNullOrEmpty(s.Notes))
+                {
+                    <div class="session-notes">@s.Notes</div>
+                }
+            </div>
+        </div>
+    }
+    <a asp-controller="StudySessions" asp-action="Index" class="btn btn-primary">View Full Planner</a>
+}
