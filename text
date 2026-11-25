@@ -1,0 +1,35 @@
+StudyFlow/
+├── Controllers/
+│   ├── HomeController.cs
+│   ├── StudySessionsController.cs
+│   └── ModulesController.cs
+├── Models/
+│   ├── Module.cs
+│   ├── StudySession.cs
+│   ├── StudySessionViewModel.cs
+│   └── ErrorViewModel.cs
+├── Data/
+│   └── StudyFlowRepository.cs
+├── Views/
+│   ├── Shared/
+│   │   ├── _Layout.cshtml
+│   │   └── _ValidationScriptsPartial.cshtml
+│   ├── Home/
+│   │   ├── Index.cshtml
+│   │   └── Privacy.cshtml
+│   ├── StudySessions/
+│   │   ├── Index.cshtml
+│   │   ├── Create.cshtml
+│   │   ├── Edit.cshtml
+│   │   ├── Delete.cshtml
+│   │   └── _SessionForm.cshtml
+│   └── Modules/
+│       ├── Index.cshtml
+│       ├── Create.cshtml
+│       └── Edit.cshtml
+├── wwwroot/
+│   ├── css/
+│   │   └── site.css
+│   └── js/
+│       └── site.js
+└── Program.cs
