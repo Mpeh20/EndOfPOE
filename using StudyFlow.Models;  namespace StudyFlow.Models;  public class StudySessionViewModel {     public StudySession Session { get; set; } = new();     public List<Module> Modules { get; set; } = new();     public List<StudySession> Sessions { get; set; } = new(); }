@@ -1,0 +1,82 @@
+using StudyFlow.Models;
+
+namespace StudyFlow.Data;
+
+public class StudyFlowRepository
+{
+    private readonly List<Module> _modules = new()
+    {
+        new Module { Id = 1, Name = "Programming 1A", ColourHex = "#3B82F6" },
+        new Module { Id = 2, Name = "Business Management", ColourHex = "#22C55E" },
+        new Module { Id = 3, Name = "Information Systems", ColourHex = "#F59E0B" }
+    };
+
+    private readonly List<StudySession> _sessions = new()
+    {
+        new StudySession { Id = 1, ModuleId = 1, Date = DateTime.Today, StartTime = new TimeSpan(9,0,0), DurationMinutes = 90, Notes = "Revision for test", Completed = false },
+        new StudySession { Id = 2, ModuleId = 2, Date = DateTime.Today.AddDays(1), StartTime = new TimeSpan(14,0,0), DurationMinutes = 60, Notes = "Group prep", Completed = false }
+    };
+
+    private int _nextModuleId = 4;
+    private int _nextSessionId = 3;
+
+    // Modules
+    public List<Module> GetModules() => _modules.ToList();
+
+    public Module? GetModule(int id) => _modules.FirstOrDefault(m => m.Id == id);
+
+    public void AddModule(Module module)
+    {
+        module.Id = _nextModuleId++;
+        _modules.Add(module);
+    }
+
+    public void UpdateModule(Module module)
+    {
+        var existing = GetModule(module.Id);
+        if (existing != null)
+        {
+            existing.Name = module.Name;
+            existing.ColourHex = module.ColourHex;
+        }
+    }
+
+    public void DeleteModule(int id)
+    {
+        _modules.RemoveAll(m => m.Id == id);
+        _sessions.RemoveAll(s => s.ModuleId == id);
+    }
+
+    // Sessions
+    public List<StudySession> GetSessions() => _sessions.OrderBy(s => s.Date).ThenBy(s => s.StartTime).ToList();
+
+    public StudySession? GetSession(int id) => _sessions.FirstOrDefault(s => s.Id == id);
+
+    public void AddSession(StudySession session)
+    {
+        session.Id = _nextSessionId++;
+        _sessions.Add(session);
+    }
+
+    public void UpdateSession(StudySession session)
+    {
+        var existing = GetSession(session.Id);
+        if (existing != null)
+        {
+            existing.ModuleId = session.ModuleId;
+            existing.Date = session.Date;
+            existing.StartTime = session.StartTime;
+            existing.DurationMinutes = session.DurationMinutes;
+            existing.Notes = session.Notes;
+            existing.Completed = session.Completed;
+        }
+    }
+
+    public void DeleteSession(int id) => _sessions.RemoveAll(s => s.Id == id);
+
+    public void ToggleComplete(int id)
+    {
+        var s = GetSession(id);
+        if (s != null) s.Completed = !s.Completed;
+    }
+}
