@@ -1,0 +1,33 @@
+@model StudyFlow.Models.Module
+@{
+    ViewData["Title"] = "Add Module";
+}
+
+<h1>Add New Module</h1>
+<div class="card">
+    <form asp-action="Create" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
+
+        <div class="form-group">
+            <label asp-for="Name">Module Name *</label>
+            <input asp-for="Name" class="form-control" placeholder="e.g. Programming 1A" />
+            <span asp-validation-for="Name" class="field-validation-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ColourHex">Colour (hex) *</label>
+            <input asp-for="ColourHex" type="color" class="form-control" style="height:50px;padding:.25rem;" />
+            <span asp-validation-for="ColourHex" class="field-validation-error"></span>
+        </div>
+
+        <div style="display:flex;gap:.75rem;margin-top:1rem;">
+            <button type="submit" class="btn btn-primary">Save Module</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
