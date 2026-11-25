@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - StudyFlow</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="nav-container">
+            <a class="brand" asp-controller="Home" asp-action="Index">
+                <span class="brand-icon">📅</span> StudyFlow
+            </a>
+            <ul class="nav-links">
+                <li><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+                <li><a asp-controller="StudySessions" asp-action="Index">Study Planner</a></li>
+                <li><a asp-controller="Modules" asp-action="Index">Modules</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-success" role="status" aria-live="polite">
+            ✅ @TempData["Success"]
+        </div>
+    }
+
+    <main id="main" class="container">
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <p>&copy; @DateTime.Now.Year - StudyFlow — Academic Study Time Planner</p>
+    </footer>
+
+    <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
