@@ -1,0 +1,40 @@
+@model StudyFlow.Models.StudySessionViewModel
+
+<div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
+
+<div class="form-group">
+    <label asp-for="Session.ModuleId">Module *</label>
+    <select asp-for="Session.ModuleId" class="form-control">
+        <option value="">-- Select a module --</option>
+        @foreach (var m in Model.Modules)
+        {
+            <option value="@m.Id">@m.Name</option>
+        }
+    </select>
+    <span asp-validation-for="Session.ModuleId" class="field-validation-error"></span>
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label asp-for="Session.Date">Date *</label>
+        <input asp-for="Session.Date" type="date" class="form-control" />
+        <span asp-validation-for="Session.Date" class="field-validation-error"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Session.StartTime">Start Time *</label>
+        <input asp-for="Session.StartTime" type="time" class="form-control" />
+        <span asp-validation-for="Session.StartTime" class="field-validation-error"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="Session.DurationMinutes">Duration (minutes) *</label>
+    <input asp-for="Session.DurationMinutes" type="number" min="15" max="480" step="15" class="form-control" />
+    <span asp-validation-for="Session.DurationMinutes" class="field-validation-error"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Session.Notes">Notes (optional)</label>
+    <textarea asp-for="Session.Notes" rows="3" class="form-control" placeholder="e.g. Revise chapter 3"></textarea>
+    <span asp-validation-for="Session.Notes" class="field-validation-error"></span>
+</div>
